@@ -22,5 +22,5 @@
   },
   "include": [
     "src"
-  ]
+, "../todo-manager-app1/src/utils/interfaces.tsx"  ]
 }

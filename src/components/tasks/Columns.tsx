@@ -1,5 +1,5 @@
 import Column from './Column';
-import { ColumnInterface } from '../../../../todo-manager-app1/src/utils/interfaces';
+import { ColumnInterface } from '../../utils/interfaces';
 
 interface ColumnProps {
  columns: ColumnInterface[];

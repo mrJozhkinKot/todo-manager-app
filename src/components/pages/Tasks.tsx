@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { ColumnInterface } from '../../../../todo-manager-app1/src/utils/interfaces';
+import { ColumnInterface } from '../../utils/interfaces';
 import Columns from '../tasks/Columns';
 import { tasksSlice } from '../../reducers/tasksReducer';
 import { useAppDispatch, useAppSelector } from '../../hooks/redux';

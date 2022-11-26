@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColumnInterface } from '../../../../todo-manager-app1/src/utils/interfaces';
+import { ColumnInterface } from '../../utils/interfaces';
 import Tasks from './Tasks';
 
 interface ColumnProps {

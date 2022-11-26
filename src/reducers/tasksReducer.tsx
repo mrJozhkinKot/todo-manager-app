@@ -1,9 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import {
- ProjectInterface,
- TaskInterface,
- ColumnInterface,
-} from '../../../todo-manager-app1/src/utils/interfaces';
+import { ProjectInterface, TaskInterface, ColumnInterface } from '../utils/interfaces';
 
 interface TasksState {
  projects: ProjectInterface[];

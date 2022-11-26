@@ -2,16 +2,16 @@ import React from 'react';
 import { Route, Routes } from 'react-router-dom';
 import './App.css';
 import Layout from './components/Layout';
-import Projects from './components/pages/Projects';
-import Tasks from './components/pages/Tasks';
+import ProjectManager from './components/pages/ProjectManager';
+import TaskManager from './components/pages/TaskManager';
 
 function App() {
  return (
   <div className="App">
    <Routes>
     <Route path="/" element={<Layout />}>
-     <Route index element={<Projects />} />
-     <Route path="/tasks" element={<Tasks />} />
+     <Route index element={<ProjectManager />} />
+     <Route path="/tasks" element={<TaskManager />} />
     </Route>
    </Routes>
   </div>

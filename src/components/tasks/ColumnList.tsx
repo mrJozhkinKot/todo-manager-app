@@ -1,18 +1,18 @@
 import Column from './Column';
 import { ColumnInterface } from '../../utils/interfaces';
 
-interface ColumnProps {
+interface ColumnListProps {
  columns: ColumnInterface[];
 }
 
-const Columns: React.FC<ColumnProps> = ({ columns }) => {
+const ColumnList: React.FC<ColumnListProps> = ({ columns }) => {
  return (
   <div className="tasks_wrapper">
    {columns.map((col) => (
-    <Column key={col.id} column={col} />
+    <Column key={col.id} column={col} tasks={col.tasks} />
    ))}
   </div>
  );
 };
 
-export default Columns;
+export default ColumnList;

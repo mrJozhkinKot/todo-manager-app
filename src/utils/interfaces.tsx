@@ -2,6 +2,7 @@ export interface ProjectInterface {
  id: string;
  title: string;
  description: string;
+ columns: ColumnInterface[];
 }
 
 export interface TaskInterface {
@@ -15,10 +16,11 @@ export interface TaskInterface {
  files?: Blob;
  status: string;
  comments: string[];
+ columnID: string;
 }
 
 export interface ColumnInterface {
  id: string;
  title: string;
- tasks?: TaskInterface[];
+ tasks: TaskInterface[];
 }

@@ -5,6 +5,7 @@
   --third-bg-color: rgba(151, 148, 148, 0.651);
   --secondary-color: rgb(255, 95, 74);
   --text-color: #fff;
+  --secondary-text-color: rgba(105, 102, 102, 0.651);
 }
 * {
   margin: 0;
@@ -51,6 +52,10 @@ a {
   color: var(--secondary-color);
 }
 
+.projects_project {
+  background-color: var(--secondary-bg-color);
+}
+
 .tasks_wrapper {
   display: flex;
   justify-content: space-around;
@@ -78,11 +83,12 @@ a {
 
 .tasks_column-button {
   background-color: var(--main-color);
-  padding: 0.2rem 1rem;
+  padding: 0.3rem;
   color: var(--text-color);
   align-self: flex-start;
   margin-left: 1rem;
-  border-radius: 0.3rem
+  border-radius: 0.3rem;
+  font-size: 0.7rem;
 }
 
 .tasks_column-button:hover {
@@ -98,12 +104,28 @@ a {
 }
 
 .tasks_task {
+  display: flex;
+  justify-content: space-between;
   background-color: var(--third-bg-color);
   width: 100%;
   margin-bottom: 1rem;
   padding: 1rem;
   border: 1px solid var(--secondary-bg-color);
   border-radius: 0.2rem;
+}
+
+.tasks_task-icons {
+  margin-left: 0.5rem;
+  font-size: 0.8rem;
+  cursor: pointer;
+  color: var(--secondary-text-color);
+}
+.tasks_task-icon {
+  margin-left: 0.5rem;
+}
+
+.tasks_task-icon:hover {
+  color: var(--main-color);
 }
 
 .tasks_task:hover {

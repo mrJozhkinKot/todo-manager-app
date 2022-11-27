@@ -7,7 +7,6 @@ const Header = () => {
    <h1 className="header_title">TODO MANAGER</h1>
    <div className="header_menu">
     <NavLink to="/">Projects</NavLink>
-    <NavLink to="/tasks">Tasks</NavLink>
    </div>
   </div>
  );

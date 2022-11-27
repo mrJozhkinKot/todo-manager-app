@@ -4,7 +4,7 @@ const initialState: ManagerState = {
  projects: [
   {
    id: '1',
-   title: '',
+   title: 'First project',
    description: '',
    columns: [
     {
@@ -71,6 +71,7 @@ const initialState: ManagerState = {
    ],
   },
  ],
+ isProjectModal: true,
 };
 
 export const managerReducer = (state = initialState, action: ManagerAction): ManagerState => {
@@ -103,7 +104,6 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
        ...state.projects[index],
        columns: state.projects[index].columns.map((col, indCol) => {
         if (action.payload.colID === col.id) {
-         console.log(action.payload.colID, col.id, index);
          return {
           ...col,
           tasks: state.projects[index].columns[indCol].tasks.filter(
@@ -117,6 +117,11 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
      }
      return project;
     }),
+   };
+  case ManagerActionType.TOGGLE_IS_PROJECT_MODAL:
+   return {
+    ...state,
+    isProjectModal: action.payload,
    };
   default:
    return state;

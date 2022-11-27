@@ -4,6 +4,7 @@
   --secondary-bg-color: rgba(194, 190, 190, 0.651);
   --third-bg-color: rgba(151, 148, 148, 0.651);
   --secondary-color: rgb(255, 95, 74);
+  --secondary-color-bright: rgb(254, 54, 27);
   --text-color: #fff;
   --secondary-text-color: rgba(105, 102, 102, 0.651);
   --third-text-color: rgba(80, 80, 80, 0.94);
@@ -136,20 +137,33 @@ a {
 .projects_project {
   display: flex;
   justify-content: space-between;
+  align-items: baseline;
   background-color: var(--third-bg-color);
   margin-bottom: 1rem;
-  padding: 2rem 1rem;
+  padding: 0.5rem 1rem;
   transition: 0.5s;
   border-radius: 5px;
-}
-
-.projects_project-title {
-  cursor: pointer;
 }
 
 .projects_project:hover {
   background-color: var(--secondary-color);
 }
+
+.projects_project-title {
+  cursor: pointer;
+  border-radius: 5px;
+  padding: 1rem;
+} 
+
+.projects_project-title:hover {
+  background-color: var(--secondary-color-bright);
+} 
+
+.projects_project-icons {
+  cursor: pointer;
+  padding: 1rem 0;
+  flex-shrink: 1;
+} 
 
 .projects_button {
   padding: 0.5rem;

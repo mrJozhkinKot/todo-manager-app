@@ -5,7 +5,6 @@ const initialState: ManagerState = {
   {
    id: '1',
    title: 'First project',
-   description: '',
    columns: [
     {
      id: 'queue',
@@ -71,7 +70,8 @@ const initialState: ManagerState = {
    ],
   },
  ],
- isProjectModal: true,
+ isModal: false,
+ currentColumnId: '',
 };
 
 export const managerReducer = (state = initialState, action: ManagerAction): ManagerState => {
@@ -118,10 +118,25 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
      return project;
     }),
    };
-  case ManagerActionType.TOGGLE_IS_PROJECT_MODAL:
+  case ManagerActionType.TOGGLE_IS_MODAL:
    return {
     ...state,
-    isProjectModal: action.payload,
+    isModal: action.payload,
+   };
+  case ManagerActionType.CREATE_NEW_PROJECT:
+   return {
+    ...state,
+    projects: [...state.projects, action.payload],
+   };
+  case ManagerActionType.DELETE_PROJECT:
+   return {
+    ...state,
+    projects: state.projects.filter((project) => project.id !== action.payload),
+   };
+  case ManagerActionType.SET_COLUMN_ID:
+   return {
+    ...state,
+    currentColumnId: action.payload,
    };
   default:
    return state;

@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { ManagerActionType } from '../../utils/reducerTypes';
 
@@ -6,14 +6,16 @@ interface ModalProps {
  modal: {
   text: string;
  };
+ onCreate: (value: string) => void;
 }
 
-const Modal: React.FC<ModalProps> = ({ modal }) => {
+const Modal: React.FC<ModalProps> = ({ modal, onCreate }) => {
  const dispatch = useDispatch();
+ const [value, setValue] = useState<string>('');
 
  const closeModal = () => {
   dispatch({
-   type: ManagerActionType.TOGGLE_IS_PROJECT_MODAL,
+   type: ManagerActionType.TOGGLE_IS_MODAL,
    payload: false,
   });
  };
@@ -27,11 +29,22 @@ const Modal: React.FC<ModalProps> = ({ modal }) => {
      className="modal_form"
      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {
       e.preventDefault();
-      console.log('submit');
+      onCreate(value);
+      closeModal();
      }}
     >
-     <input type="text" className="modal_input"></input>
-     <input type="submit" className="modal_button-create" value="Create" disabled={false} />
+     <input
+      type="text"
+      className="modal_input"
+      value={value}
+      onChange={(e: React.FormEvent<HTMLInputElement>) => setValue(e.currentTarget.value)}
+     ></input>
+     <input
+      type="submit"
+      className="modal_button-create"
+      value="Create"
+      disabled={value ? false : true}
+     />
     </form>
    </div>
   </div>

@@ -4,26 +4,41 @@ import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Modal from '../modals/Modal';
 import Project from '../tasks/Project';
 import { ManagerActionType } from '../../utils/reducerTypes';
+import { v4 as uuidv4 } from 'uuid';
 
 const Projects = () => {
- const { projects, isProjectModal } = useTypedSelector((state) => state.manager);
+ const { projects, isModal } = useTypedSelector((state) => state.manager);
  const dispatch = useDispatch();
 
- const createProject = () => {
+ const openModal = () => {
   dispatch({
-   type: ManagerActionType.TOGGLE_IS_PROJECT_MODAL,
+   type: ManagerActionType.TOGGLE_IS_MODAL,
    payload: true,
+  });
+ };
+ const createProject = (value: string) => {
+  dispatch({
+   type: ManagerActionType.CREATE_NEW_PROJECT,
+   payload: {
+    id: uuidv4(),
+    title: value,
+    columns: [
+     { id: 'queue', title: 'Queue', tasks: [] },
+     { id: 'development', title: 'Development', tasks: [] },
+     { id: 'done', title: 'Done', tasks: [] },
+    ],
+   },
   });
  };
  return (
   <div className="projects">
-   {isProjectModal && <Modal modal={{ text: 'Create New Project!' }} />}
+   {isModal && <Modal modal={{ text: 'Create New Project!' }} onCreate={createProject} />}
    <div className="projects_wrapper">
     {projects.map((project) => (
      <Project key={project.id} project={project} />
     ))}
    </div>
-   <div className="projects_button" onClick={createProject}>
+   <div className="projects_button" onClick={openModal}>
     Create Project
    </div>
   </div>

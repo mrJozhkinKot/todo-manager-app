@@ -24,7 +24,9 @@ const Modal: React.FC<ModalProps> = ({ modal, onCreate }) => {
   <div className="modal">
    <div className="modal_content">
     <div>{modal.text}</div>
-    <i className="fas fa-times modal_button-close" onClick={closeModal}></i>
+    <i className="fas fa-times modal_button-close" onClick={closeModal}>
+     X
+    </i>
     <form
      className="modal_form"
      onSubmit={(e: React.FormEvent<HTMLFormElement>) => {

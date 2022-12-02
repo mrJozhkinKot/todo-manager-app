@@ -77,8 +77,7 @@ a {
   text-align: center;
   background-color: var(--text-color);
   color: var(--third-text-color);
-  width: 40%;
-  height: 40%;
+  width: 400px;
   border-radius: 5px;
   padding: 1rem 1rem 0 1rem;
 }
@@ -121,6 +120,78 @@ a {
 
 .modal_button-create:disabled {
   background-color: var(--third-bg-color);
+}
+
+.modal-edit_content {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  text-align: center;
+  background-color: var(--text-color);
+  color: var(--third-text-color);
+  width: 400px;
+  border-radius: 5px;
+  padding: 1rem;
+}
+
+.modal-edit_title {
+  display: flex;
+  font-size: 1.2rem;
+  color: var(--main-color);
+  align-self: flex-start;
+}
+
+.modal-edit_button-edit {
+  margin-left: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-edit_description {
+  width: 100%;
+  align-self: flex-start;
+  text-align: start;
+  font-size: 0.8rem;
+}
+
+.modal-edit_status {
+  align-self: start;
+  font-size: 0.7rem;
+  margin-bottom: 1rem;
+}
+
+.modal-edit_additional-info {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+}
+
+.modal-edit_data-container {
+  display: flex;
+  flex-direction: column;
+  align-self: flex-start;
+  font-size: 0.8rem;
+  margin-top: 1rem;
+}
+
+.modal-edit_buttons {
+  margin-top: 1rem;
+  text-align: end;
+}
+
+.modal-edit_button-confirm {
+  cursor: pointer;
+  display: inline-block;
+  border: none;
+  border-radius: 5px;
+  background-color: var(--third-bg-color);
+  align-self: flex-end;
+  padding: 0.3rem 0.6rem;
+  text-align: end;
+}
+
+.modal-edit_button-confirm:hover {
+  background-color: var(--secondary-color);
 }
 
 .projects {
@@ -239,6 +310,9 @@ a {
   transition: 0.5s;
 }
 
+.tasks_task-title {
+  cursor: pointer;
+}
 .tasks_task-icons {
   margin-left: 0.5rem;
 }

@@ -13,11 +13,12 @@ const initialState: ManagerState = {
       {
        id: '3',
        number: 1,
-       title: 'do somethieng',
-       description: '',
-       dateCreate: '',
-       timeInProgress: '',
-       priority: '',
+       title: 'do something',
+       description:
+        'this task about something very important, this task about something very important, this task about something very important this task about something very important ',
+       dateCreate: '01.12.22',
+       timeInProgress: '1day',
+       priority: 'low',
        status: 'on progress',
        comments: [],
        columnID: 'queue',
@@ -71,7 +72,9 @@ const initialState: ManagerState = {
   },
  ],
  isModal: false,
+ isModalEdit: false,
  currentColumnId: '',
+ currentTaskId: '',
 };
 
 export const managerReducer = (state = initialState, action: ManagerAction): ManagerState => {
@@ -123,6 +126,11 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
     ...state,
     isModal: action.payload,
    };
+  case ManagerActionType.TOGGLE_IS_MODAL_EDIT:
+   return {
+    ...state,
+    isModalEdit: action.payload,
+   };
   case ManagerActionType.CREATE_NEW_PROJECT:
    return {
     ...state,
@@ -137,6 +145,37 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
    return {
     ...state,
     currentColumnId: action.payload,
+   };
+  case ManagerActionType.SET_TASK_ID:
+   return {
+    ...state,
+    currentTaskId: action.payload,
+   };
+  case ManagerActionType.EDIT_TASK:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task) => {
+           if (action.payload.taskID === task.id) {
+            return { ...task, ...action.payload.task };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
    };
   default:
    return state;

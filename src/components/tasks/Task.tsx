@@ -28,7 +28,6 @@ const Task: React.FC<TaskProps> = ({ task }) => {
  };
 
  const editTask = (taskChanged: TaskInterface) => {
-  console.log('change it!');
   dispatch({
    type: ManagerActionType.EDIT_TASK,
    payload: { task: taskChanged, projectID: id, colID: task.columnID, taskID: task.id },
@@ -42,7 +41,7 @@ const Task: React.FC<TaskProps> = ({ task }) => {
      {task.title}
     </div>
     <div className="tasks_task-icons">
-     <i className="fas fa-pencil-alt tasks_task-icon"></i>
+     <i className="fas fa-pencil-alt tasks_task-icon" onClick={openModal}></i>
      <i className="fas fa-trash-alt tasks_task-icon" onClick={() => deleteTaskFromThisColumn()}></i>
     </div>
    </div>

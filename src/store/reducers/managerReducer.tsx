@@ -5,6 +5,7 @@ const initialState: ManagerState = {
   {
    id: '1',
    title: 'First project',
+   description: 'Some description about this project',
    columns: [
     {
      id: 'queue',
@@ -17,9 +18,9 @@ const initialState: ManagerState = {
        description:
         'this task about something very important, this task about something very important, this task about something very important this task about something very important ',
        dateCreate: '01.12.22',
-       timeInProgress: '1day',
+       timeInProcess: '1day',
        priority: 'low',
-       status: 'on progress',
+       status: 'on process',
        comments: [],
        columnID: 'queue',
       },
@@ -29,7 +30,7 @@ const initialState: ManagerState = {
        title: 'change something',
        description: '',
        dateCreate: '',
-       timeInProgress: '',
+       timeInProcess: '',
        priority: '',
        status: 'on progress',
        comments: [],
@@ -48,7 +49,7 @@ const initialState: ManagerState = {
        title: 'make dinner',
        description: '',
        dateCreate: '',
-       timeInProgress: '',
+       timeInProcess: '',
        priority: '',
        status: 'on progress',
        comments: [],
@@ -60,7 +61,7 @@ const initialState: ManagerState = {
        title: 'do homework',
        description: '',
        dateCreate: '',
-       timeInProgress: '',
+       timeInProcess: '',
        priority: '',
        status: 'on progress',
        comments: [],
@@ -73,6 +74,7 @@ const initialState: ManagerState = {
  ],
  isModal: false,
  isModalEdit: false,
+ currentProjectId: '',
  currentColumnId: '',
  currentTaskId: '',
 };
@@ -136,10 +138,25 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
     ...state,
     projects: [...state.projects, action.payload],
    };
+  case ManagerActionType.EDIT_PROJECT:
+   return {
+    ...state,
+    projects: state.projects.map((project) => {
+     if (action.payload.projectID === project.id) {
+      return { ...action.payload.project };
+     }
+     return project;
+    }),
+   };
   case ManagerActionType.DELETE_PROJECT:
    return {
     ...state,
     projects: state.projects.filter((project) => project.id !== action.payload),
+   };
+  case ManagerActionType.SET_PROJECT_ID:
+   return {
+    ...state,
+    currentProjectId: action.payload,
    };
   case ManagerActionType.SET_COLUMN_ID:
    return {

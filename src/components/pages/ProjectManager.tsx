@@ -16,12 +16,13 @@ const Projects = () => {
    payload: true,
   });
  };
- const createProject = (value: string) => {
+ const createProject = (valueTitle: string, valueDescription: string) => {
   dispatch({
    type: ManagerActionType.CREATE_NEW_PROJECT,
    payload: {
     id: uuidv4(),
-    title: value,
+    title: valueTitle,
+    description: valueDescription,
     columns: [
      { id: 'queue', title: 'Queue', tasks: [] },
      { id: 'development', title: 'Development', tasks: [] },
@@ -32,7 +33,12 @@ const Projects = () => {
  };
  return (
   <div className="projects">
-   {isModal && <Modal modal={{ text: 'Create New Project!' }} onCreate={createProject} />}
+   {isModal && (
+    <Modal
+     modal={{ text: 'Create New Project!', buttonValue: 'Create' }}
+     onCreate={createProject}
+    />
+   )}
    <div className="projects_wrapper">
     {projects.map((project) => (
      <Project key={project.id} project={project} />

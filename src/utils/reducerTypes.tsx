@@ -4,6 +4,7 @@ export interface ManagerState {
  projects: ProjectInterface[];
  isModal: boolean;
  isModalEdit: boolean;
+ currentProjectId: string;
  currentColumnId: string;
  currentTaskId: string;
 }
@@ -14,7 +15,9 @@ export enum ManagerActionType {
  TOGGLE_IS_MODAL = 'TOGGLE_IS_MODAL',
  TOGGLE_IS_MODAL_EDIT = 'TOGGLE_IS_MODAL_EDIT',
  CREATE_NEW_PROJECT = 'CREATE_NEW_PROJECT',
+ EDIT_PROJECT = 'EDIT_NEW_PROJECT',
  DELETE_PROJECT = 'DELETE_PROJECT',
+ SET_PROJECT_ID = 'SET_PROJECT_ID',
  SET_COLUMN_ID = 'SET_COLUMN_ID',
  SET_TASK_ID = 'SET_TASK_ID',
  EDIT_TASK = 'EDIT_TASK',
@@ -45,8 +48,17 @@ interface createNewProjectAction {
  payload: ProjectInterface;
 }
 
+interface editProjectAction {
+ type: ManagerActionType.EDIT_PROJECT;
+ payload: { project: ProjectInterface; projectID: string };
+}
+
 interface deleteProjectAction {
  type: ManagerActionType.DELETE_PROJECT;
+ payload: string;
+}
+interface setProjectIdAction {
+ type: ManagerActionType.SET_PROJECT_ID;
  payload: string;
 }
 
@@ -71,7 +83,9 @@ export type ManagerAction =
  | toggleIsModal
  | toggleIsModalEdit
  | createNewProjectAction
+ | editProjectAction
  | deleteProjectAction
+ | setProjectIdAction
  | setColumnIdAction
  | setTaskIdAction
  | editTaskAction;

@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskInterface } from '../../utils/interfaces';
 import { ManagerActionType } from '../../utils/reducerTypes';
+import moment from 'moment';
 
 interface ModalEditProps {
  task: TaskInterface;
@@ -21,7 +22,16 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
 
  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   setValueSelect(e.currentTarget.value);
-  console.log(e.currentTarget.value);
+ };
+
+ const calculateTimeInProcess = () => {
+  const start = moment(task.dateCreate, 'LLL');
+  const now = moment();
+  const diffInDays = now.diff(start, 'seconds');
+  const diffFormat = `дней: ${moment(diffInDays).format('D')}, часов: ${moment(diffInDays).format(
+   'hh:mm'
+  )}`;
+  return diffFormat;
  };
 
  const closeModal = () => {
@@ -59,7 +69,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
     <div className="modal-edit_additional-info">
      <div className="modal-edit_data-container">
       <p>create: {task.dateCreate}</p>
-      <p>in progress: {task.timeInProgress}</p>
+      <p>in the process:{calculateTimeInProcess()}</p>
      </div>
      <select defaultValue={task.priority} onChange={onSelectChange}>
       {priorities.map((val) => {

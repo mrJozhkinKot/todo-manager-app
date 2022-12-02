@@ -170,6 +170,7 @@ a {
   display: flex;
   flex-direction: column;
   align-self: flex-start;
+  text-align: start;
   font-size: 0.8rem;
   margin-top: 1rem;
 }

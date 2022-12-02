@@ -1,6 +1,7 @@
 export interface ProjectInterface {
  id: string;
  title: string;
+ description: string;
  columns: ColumnInterface[];
 }
 
@@ -10,7 +11,7 @@ export interface TaskInterface {
  title: string;
  description: string;
  dateCreate: string;
- timeInProgress: string;
+ timeInProcess: string;
  priority: string;
  files?: Blob;
  status: string;
@@ -22,4 +23,10 @@ export interface ColumnInterface {
  id: string;
  title: string;
  tasks: TaskInterface[];
+}
+
+export interface StatusListInterface {
+ queue: string;
+ development: string;
+ done: string;
 }

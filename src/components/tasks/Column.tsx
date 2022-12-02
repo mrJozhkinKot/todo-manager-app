@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColumnInterface, TaskInterface } from '../../utils/interfaces';
+import { ColumnInterface, TaskInterface, StatusListInterface } from '../../utils/interfaces';
 import TaskList from './TaskList';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
@@ -7,6 +7,7 @@ import { ManagerActionType } from '../../utils/reducerTypes';
 import Modal from '../modals/Modal';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import { useParams } from 'react-router-dom';
+import moment from 'moment';
 
 interface ColumnProps {
  column: ColumnInterface;
@@ -17,6 +18,11 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
  const dispatch = useDispatch();
  const { id } = useParams();
  const { isModal, currentColumnId } = useTypedSelector((state) => state.manager);
+ const statusList: StatusListInterface = {
+  queue: 'at the waiting list',
+  development: 'in progress',
+  done: 'done',
+ };
 
  const setCurrentColumnId = () => {
   dispatch({
@@ -30,7 +36,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
    payload: true,
   });
  };
- const addNewTaskToThisColumn = (value: string) => {
+ const addNewTaskToThisColumn = (valueTitle: string, valueDescription: string) => {
   dispatch({
    type: ManagerActionType.ADD_NEW_TASK,
    payload: {
@@ -39,12 +45,12 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
      {
       id: uuidv4(),
       number: 8,
-      title: value,
-      description: '',
-      dateCreate: '',
+      title: valueTitle,
+      description: valueDescription,
+      dateCreate: moment().format('LLL'),
       timeInProgress: '',
-      priority: '',
-      status: 'on progress',
+      priority: 'middle',
+      status: 'in proccess',
       comments: [],
       columnID: column.id,
      },
@@ -59,7 +65,10 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
   <div className="tasks_column">
    <div className="tasks_column-title">{column.title}</div>
    {isModal && currentColumnId === column.id && (
-    <Modal modal={{ text: 'Create New Task' }} onCreate={addNewTaskToThisColumn} />
+    <Modal
+     modal={{ text: 'Create New Task', buttonValue: 'Create' }}
+     onCreate={addNewTaskToThisColumn}
+    />
    )}
    {tasks && <TaskList tasks={tasks} />}
    <div

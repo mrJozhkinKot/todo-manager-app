@@ -142,6 +142,10 @@ a {
   align-self: flex-start;
 }
 
+.modal-edit_title i {
+  margin: 0 0.5rem;
+}
+
 .modal-edit_button-edit {
   margin-left: 1.5rem;
   cursor: pointer;
@@ -173,6 +177,10 @@ a {
   text-align: start;
   font-size: 0.8rem;
   margin-top: 1rem;
+}
+
+.modal-edit_priorities {
+  font-size: 0.8rem;
 }
 
 .modal-edit_buttons {

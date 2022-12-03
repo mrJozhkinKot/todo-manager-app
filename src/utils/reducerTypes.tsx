@@ -1,4 +1,4 @@
-import { ProjectInterface, TaskInterface } from './interfaces';
+import { ColumnInterface, ProjectInterface, TaskInterface } from './interfaces';
 
 export interface ManagerState {
  projects: ProjectInterface[];
@@ -7,6 +7,8 @@ export interface ManagerState {
  currentProjectId: string;
  currentColumnId: string;
  currentTaskId: string;
+ currentColumn: ColumnInterface;
+ currentTask: TaskInterface;
 }
 
 export enum ManagerActionType {
@@ -21,6 +23,9 @@ export enum ManagerActionType {
  SET_COLUMN_ID = 'SET_COLUMN_ID',
  SET_TASK_ID = 'SET_TASK_ID',
  EDIT_TASK = 'EDIT_TASK',
+ SET_CURRENT_COLUMN = 'SET_CURRENT_COLUMN',
+ SET_CURRENT_TASK = 'SET_CURRENT_TASK',
+ SORT_TASKS = 'SORT_TASKS',
 }
 
 interface addNewTaskAction {
@@ -77,6 +82,25 @@ interface editTaskAction {
  payload: { task: TaskInterface; colID: string; projectID: string; taskID: string };
 }
 
+interface setCurrentColumn {
+ type: ManagerActionType.SET_CURRENT_COLUMN;
+ payload: ColumnInterface;
+}
+
+interface setCurrentTask {
+ type: ManagerActionType.SET_CURRENT_TASK;
+ payload: TaskInterface;
+}
+
+interface sortTasks {
+ type: ManagerActionType.SORT_TASKS;
+ payload: {
+  projectID: string;
+  draggableColumn: ColumnInterface;
+  dropableColumn: ColumnInterface;
+ };
+}
+
 export type ManagerAction =
  | addNewTaskAction
  | deleteTaskAction
@@ -88,4 +112,7 @@ export type ManagerAction =
  | setProjectIdAction
  | setColumnIdAction
  | setTaskIdAction
- | editTaskAction;
+ | editTaskAction
+ | setCurrentColumn
+ | setCurrentTask
+ | sortTasks;

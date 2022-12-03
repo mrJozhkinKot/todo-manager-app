@@ -77,6 +77,19 @@ const initialState: ManagerState = {
  currentProjectId: '',
  currentColumnId: '',
  currentTaskId: '',
+ currentColumn: { id: '', title: '', tasks: [] },
+ currentTask: {
+  id: '',
+  number: 0,
+  title: '',
+  description: '',
+  dateCreate: '',
+  timeInProcess: '',
+  priority: '',
+  status: '',
+  comments: [],
+  columnID: '',
+ },
 };
 
 export const managerReducer = (state = initialState, action: ManagerAction): ManagerState => {
@@ -188,6 +201,37 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
          };
         }
         return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.SET_CURRENT_COLUMN:
+   return {
+    ...state,
+    currentColumn: action.payload,
+   };
+  case ManagerActionType.SET_CURRENT_TASK:
+   return {
+    ...state,
+    currentTask: action.payload,
+   };
+  case ManagerActionType.SORT_TASKS:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (project.id === action.payload.projectID) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((column) => {
+        if (column.id === action.payload.dropableColumn.id) {
+         return action.payload.dropableColumn;
+        }
+        if (column.id === action.payload.draggableColumn.id) {
+         return action.payload.draggableColumn;
+        }
+        return column;
        }),
       };
      }

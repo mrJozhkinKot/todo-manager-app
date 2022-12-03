@@ -52,6 +52,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
      )}
      {!isEdit && <p>{task.title}</p>}
      <i className="fas fa-pencil-alt modal-edit_button-edit" onClick={() => setIsEdit(true)}></i>
+     <i className="fas fa-check" onClick={() => setIsEdit(false)}></i>
     </div>
     <i className="fas fa-times modal_button-close" onClick={closeModal}></i>
     <p className="modal-edit_status">{task.status}</p>
@@ -71,15 +72,21 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
       <p>create: {task.dateCreate}</p>
       <p>in the process:{calculateTimeInProcess()}</p>
      </div>
-     <select defaultValue={task.priority} onChange={onSelectChange}>
-      {priorities.map((val) => {
-       return (
-        <option key={val} value={val}>
-         {val}
-        </option>
-       );
-      })}
-     </select>
+     <div className="modal-edit_priorities">
+      <p>Priorities</p>
+      {isEdit && (
+       <select defaultValue={task.priority} onChange={onSelectChange}>
+        {priorities.map((val) => {
+         return (
+          <option key={val} value={val}>
+           {val}
+          </option>
+         );
+        })}
+       </select>
+      )}
+      {!isEdit && <p>{task.priority}</p>}
+     </div>
     </div>
     <div className="modal-edit_buttons">
      <div

@@ -1,5 +1,5 @@
 import React from 'react';
-import { ColumnInterface, TaskInterface, StatusListInterface } from '../../utils/interfaces';
+import { ColumnInterface, TaskInterface } from '../../utils/interfaces';
 import TaskList from './TaskList';
 import { v4 as uuidv4 } from 'uuid';
 import { useDispatch } from 'react-redux';
@@ -17,12 +17,9 @@ interface ColumnProps {
 const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
  const dispatch = useDispatch();
  const { id } = useParams();
- const { isModal, currentColumnId } = useTypedSelector((state) => state.manager);
- const statusList: StatusListInterface = {
-  queue: 'at the waiting list',
-  development: 'in progress',
-  done: 'done',
- };
+ const { isModal, currentColumnId, currentColumn, currentTask } = useTypedSelector(
+  (state) => state.manager
+ );
 
  const setCurrentColumnId = () => {
   dispatch({
@@ -50,7 +47,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
       dateCreate: moment().format('LLL'),
       timeInProgress: '',
       priority: 'middle',
-      status: 'in proccess',
+      status: column.id,
       comments: [],
       columnID: column.id,
      },
@@ -61,8 +58,32 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
   });
  };
 
+ const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
+  e.preventDefault();
+ };
+
+ const dropHandler = (e: React.DragEvent<HTMLDivElement>, column: ColumnInterface) => {
+  e.preventDefault();
+  e.stopPropagation();
+  column.tasks.push(currentTask);
+  const currentIndex = currentColumn.tasks.indexOf(currentTask);
+  currentColumn.tasks.splice(currentIndex, 1);
+  dispatch({
+   type: ManagerActionType.SORT_TASKS,
+   payload: {
+    projectID: id,
+    draggableColumn: currentColumn,
+    dropableColumn: column,
+   },
+  });
+ };
+
  return (
-  <div className="tasks_column">
+  <div
+   className="tasks_column"
+   onDragOver={(e: React.DragEvent<HTMLDivElement>) => dragOverHandler(e)}
+   onDrop={(e: React.DragEvent<HTMLDivElement>) => dropHandler(e, column)}
+  >
    <div className="tasks_column-title">{column.title}</div>
    {isModal && currentColumnId === column.id && (
     <Modal
@@ -70,7 +91,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
      onCreate={addNewTaskToThisColumn}
     />
    )}
-   {tasks && <TaskList tasks={tasks} />}
+   {tasks && <TaskList tasks={tasks} column={column} />}
    <div
     className="tasks_column-button"
     onClick={() => {

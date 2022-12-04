@@ -34,7 +34,7 @@ a {
 
 .header {
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   padding: 10px 20px;
   background-color: var(--main-color);
   color: var(--text-color);
@@ -53,6 +53,18 @@ a {
 
 .active {
   color: var(--secondary-color);
+}
+
+.high {
+  color: var(--secondary-color);
+}
+
+.middle {
+  color: var(--main-color);
+}
+
+.low {
+  color: green;
 }
 
 .modal {
@@ -144,11 +156,11 @@ a {
 
 .modal-edit_title i {
   margin: 0 0.5rem;
+  cursor: pointer;
 }
 
 .modal-edit_button-edit {
   margin-left: 1.5rem;
-  cursor: pointer;
 }
 
 .modal-edit_description {
@@ -182,8 +194,14 @@ a {
 .modal-edit_priorities {
   font-size: 0.8rem;
 }
+.modal-edit_priorities-options{
+  font-size: 0.8rem;
+  text-transform: uppercase;
+}
 
 .modal-edit_buttons {
+  display: flex;
+  justify-content: space-between;
   margin-top: 1rem;
   text-align: end;
 }
@@ -346,7 +364,7 @@ a {
 .footer {
   padding: 5px 10px;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
   align-items: baseline;
   background-color: var(--main-color);
   font-size: 1rem;
@@ -359,4 +377,21 @@ a {
 
 .footer i:hover, .footer a:hover, .header a:hover  {
   color: var(--secondary-color);
+}
+
+.modal-edit_file { 
+  display: none;
+ }
+
+.modal-edit_file-span {
+  cursor: pointer;
+  background: var(--main-color);
+  color: #FFF;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+}
+.modal-edit_file-span:hover { border-color: #09F; }
+.modal-edit_file-span:active {
+  background: linear-gradient(to top, #09F 0%, #024 100%);
 }

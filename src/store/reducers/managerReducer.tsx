@@ -22,7 +22,6 @@ const initialState: ManagerState = {
        priority: 'low',
        status: 'on process',
        comments: [],
-       columnID: 'queue',
       },
       {
        id: '2',
@@ -34,7 +33,6 @@ const initialState: ManagerState = {
        priority: '',
        status: 'on progress',
        comments: [],
-       columnID: 'queue',
       },
      ],
     },
@@ -53,7 +51,6 @@ const initialState: ManagerState = {
        priority: '',
        status: 'on progress',
        comments: [],
-       columnID: 'done',
       },
       {
        id: '8',
@@ -65,7 +62,6 @@ const initialState: ManagerState = {
        priority: '',
        status: 'on progress',
        comments: [],
-       columnID: 'done',
       },
      ],
     },
@@ -88,7 +84,6 @@ const initialState: ManagerState = {
   priority: '',
   status: '',
   comments: [],
-  columnID: '',
  },
 };
 

@@ -27,11 +27,8 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
  const calculateTimeInProcess = () => {
   const start = moment(task.dateCreate, 'LLL');
   const now = moment();
-  const diffInDays = now.diff(start, 'seconds');
-  const diffFormat = `дней: ${moment(diffInDays).format('D')}, часов: ${moment(diffInDays).format(
-   'hh:mm'
-  )}`;
-  return diffFormat;
+  const diffInDays = now.diff(start, 'minutes');
+  return `${diffInDays} minutes`;
  };
 
  const closeModal = () => {
@@ -52,7 +49,18 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
      )}
      {!isEdit && <p>{task.title}</p>}
      <i className="fas fa-pencil-alt modal-edit_button-edit" onClick={() => setIsEdit(true)}></i>
-     <i className="fas fa-check" onClick={() => setIsEdit(false)}></i>
+     <i
+      className="fas fa-check"
+      onClick={() => {
+       setIsEdit(false);
+       onSubmit({
+        ...task,
+        title: valueTitle,
+        description: valueDescription,
+        priority: valueSelect,
+       });
+      }}
+     ></i>
     </div>
     <i className="fas fa-times modal_button-close" onClick={closeModal}></i>
     <p className="modal-edit_status">{task.status}</p>
@@ -73,7 +81,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
       <p>in the process:{calculateTimeInProcess()}</p>
      </div>
      <div className="modal-edit_priorities">
-      <p>Priorities</p>
+      <p>Priority</p>
       {isEdit && (
        <select defaultValue={task.priority} onChange={onSelectChange}>
         {priorities.map((val) => {
@@ -85,10 +93,16 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, onSubmit }) => {
         })}
        </select>
       )}
-      {!isEdit && <p>{task.priority}</p>}
+      {!isEdit && (
+       <p className={`${task.priority} modal-edit_priorities-options`}>{task.priority}</p>
+      )}
      </div>
     </div>
     <div className="modal-edit_buttons">
+     <label>
+      <input type="file" className="modal-edit_file"></input>
+      <span className="modal-edit_file-span">Choose File</span>
+     </label>
      <div
       className="modal-edit_button-confirm"
       onClick={() => {

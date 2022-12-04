@@ -16,7 +16,6 @@ export interface TaskInterface {
  files?: Blob;
  status: string;
  comments: string[];
- columnID: string;
 }
 
 export interface ColumnInterface {

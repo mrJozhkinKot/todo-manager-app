@@ -65,7 +65,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
  const dropHandler = (e: React.DragEvent<HTMLDivElement>, column: ColumnInterface) => {
   e.preventDefault();
   e.stopPropagation();
-  column.tasks.push(currentTask);
+  column.tasks.push({ ...currentTask, status: column.id });
   const currentIndex = currentColumn.tasks.indexOf(currentTask);
   currentColumn.tasks.splice(currentIndex, 1);
   dispatch({

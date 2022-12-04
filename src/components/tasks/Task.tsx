@@ -26,14 +26,14 @@ const Task: React.FC<TaskProps> = ({ task, column }) => {
  const deleteTaskFromThisColumn = () => {
   dispatch({
    type: ManagerActionType.DELETE_TASK,
-   payload: { taskID: task.id, colID: task.columnID, projectID: id },
+   payload: { taskID: task.id, colID: column.id, projectID: id },
   });
  };
 
  const editTask = (taskChanged: TaskInterface) => {
   dispatch({
    type: ManagerActionType.EDIT_TASK,
-   payload: { task: taskChanged, projectID: id, colID: task.columnID, taskID: task.id },
+   payload: { task: taskChanged, projectID: id, colID: column.id, taskID: task.id },
   });
  };
 
@@ -59,6 +59,7 @@ const Task: React.FC<TaskProps> = ({ task, column }) => {
 
  const dragOverHandler = (e: React.DragEvent<HTMLDivElement>) => {
   e.preventDefault();
+  e.stopPropagation();
   if (e.currentTarget.className === 'tasks_task') {
    e.currentTarget.style.opacity = '0.2';
   }
@@ -72,14 +73,11 @@ const Task: React.FC<TaskProps> = ({ task, column }) => {
   e.currentTarget.style.opacity = '1';
   e.preventDefault();
   e.stopPropagation();
-  dispatch({ type: ManagerActionType.SET_CURRENT_TASK, payload: { ...task, status: column.id } });
   const currentIndex = currentColumn.tasks.indexOf(currentTask);
   currentColumn.tasks.splice(currentIndex, 1);
   const dropIndex = column.tasks.indexOf(task);
-  column.tasks.splice(dropIndex + 1, 0, currentTask);
-  console.log(currentTask);
-  console.log(column.tasks);
   console.log(column.id);
+  column.tasks.splice(dropIndex + 1, 0, { ...currentTask, status: column.id });
   dispatch({
    type: ManagerActionType.SORT_TASKS,
    payload: {

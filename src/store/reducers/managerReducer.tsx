@@ -1,73 +1,7 @@
 import { ManagerState, ManagerActionType, ManagerAction } from '../../utils/reducerTypes';
 
 const initialState: ManagerState = {
- projects: [
-  {
-   id: '1',
-   title: 'First project',
-   description: 'Some description about this project',
-   columns: [
-    {
-     id: 'queue',
-     title: 'Queue',
-     tasks: [
-      {
-       id: '3',
-       number: 1,
-       title: 'do something',
-       description:
-        'this task about something very important, this task about something very important, this task about something very important this task about something very important ',
-       dateCreate: '01.12.22',
-       timeInProcess: '1day',
-       priority: 'low',
-       status: 'on process',
-       comments: [],
-      },
-      {
-       id: '2',
-       number: 2,
-       title: 'change something',
-       description: '',
-       dateCreate: '',
-       timeInProcess: '',
-       priority: '',
-       status: 'on progress',
-       comments: [],
-      },
-     ],
-    },
-    { id: 'development', title: 'Development', tasks: [] },
-    {
-     id: 'done',
-     title: 'Done',
-     tasks: [
-      {
-       id: '7',
-       number: 1,
-       title: 'make dinner',
-       description: '',
-       dateCreate: '',
-       timeInProcess: '',
-       priority: '',
-       status: 'on progress',
-       comments: [],
-      },
-      {
-       id: '8',
-       number: 2,
-       title: 'do homework',
-       description: '',
-       dateCreate: '',
-       timeInProcess: '',
-       priority: '',
-       status: 'on progress',
-       comments: [],
-      },
-     ],
-    },
-   ],
-  },
- ],
+ projects: [],
  isModal: false,
  isModalEdit: false,
  currentProjectId: '',

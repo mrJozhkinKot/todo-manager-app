@@ -1,3 +1,4 @@
+import { CommentInterface } from '../../utils/interfaces';
 import { ManagerState, ManagerActionType, ManagerAction } from '../../utils/reducerTypes';
 
 const getItem = () => {
@@ -7,6 +8,22 @@ const getItem = () => {
  }
  return null;
 };
+
+const addRecursiveComments = (
+ comments: CommentInterface[],
+ newComment: CommentInterface
+): CommentInterface[] => {
+ return comments.map((c) => {
+  if (newComment.idParent !== c.id && !c.comments.length) {
+   return c;
+  }
+  if (newComment.idParent === c.id) {
+   return { ...c, comments: [...c.comments, newComment] };
+  }
+  return { ...c, comments: addRecursiveComments(c.comments, newComment) };
+ });
+};
+
 const initialState: ManagerState = getItem() || {
  projects: [],
  isModal: false,
@@ -91,13 +108,11 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
     ...state,
     isCreateSubtask: action.payload,
    };
-
   case ManagerActionType.TOGGLE_IS_CREATE_COMMENT:
    return {
     ...state,
     isCreateComment: action.payload,
    };
-
   case ManagerActionType.CREATE_NEW_PROJECT:
    return {
     ...state,
@@ -190,7 +205,6 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
      return project;
     }),
    };
-
   case ManagerActionType.ADD_NEW_SUBTASK:
    return {
     ...state,
@@ -368,7 +382,10 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
            if (action.payload.taskID === task.id) {
             return {
              ...task,
-             comments: state.projects[index].columns[indCol].tasks[indTask].comments,
+             comments: addRecursiveComments(
+              state.projects[index].columns[indCol].tasks[indTask].comments,
+              action.payload.comment
+             ),
             };
            }
            return task;

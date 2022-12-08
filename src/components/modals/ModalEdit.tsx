@@ -81,7 +81,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
    payload: {
     comment: {
      id: uuidv4(),
-     parentId: task.id,
+     idParent: task.id,
      text: text,
      comments: [],
     },

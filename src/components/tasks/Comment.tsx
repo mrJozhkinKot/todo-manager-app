@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import { ColumnInterface, CommentInterface, TaskInterface } from '../../utils/interfaces';
 import { ManagerActionType } from '../../utils/reducerTypes';
 import TaskInput from './TaskInput';
@@ -27,16 +28,34 @@ const Comment: React.FC<CommentProps> = ({ comment, task, column }) => {
   });
  };
 
- const addReplyComment = () => {
+ const addReplyInput = () => {
   setIsReplyInput(true);
  };
 
+ const addReplyComment = (value: string) => {
+  dispatch({
+   type: ManagerActionType.ADD_REPLY_COMMENT,
+   payload: {
+    comment: {
+     id: uuidv4(),
+     idParent: comment.id,
+     text: value,
+     comments: [],
+    },
+    projectID: id,
+    colID: column.id,
+    taskID: task.id,
+    commentID: comment.id,
+   },
+  });
+ };
+
  return (
-  <div>
+  <div className="modal-edit_comments-comment-parent">
    <div className="modal-edit_comments-comment">
     <div>
      <p>{comment.text}</p>
-     <p className="modal-edit_comments-comment_reply" onClick={addReplyComment}>
+     <p className="modal-edit_comments-comment_reply" onClick={addReplyInput}>
       Reply
      </p>
     </div>
@@ -52,12 +71,7 @@ const Comment: React.FC<CommentProps> = ({ comment, task, column }) => {
      : null}
    </div>
    {isReplyInput && (
-    <TaskInput
-     onCreate={() => {
-      console.log('re');
-     }}
-     onButtonsAction={() => setIsReplyInput(false)}
-    />
+    <TaskInput onCreate={addReplyComment} onButtonsAction={() => setIsReplyInput(false)} />
    )}
   </div>
  );

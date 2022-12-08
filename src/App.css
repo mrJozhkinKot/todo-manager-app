@@ -300,6 +300,7 @@ margin-right: 0.3rem;
  }
 
  .modal-edit_comments {
+  max-width: 95%;
   margin: 0.5rem 0;
   padding-top: 0.8rem;
   border-top: 2px solid var(--secondary-text-color);
@@ -307,10 +308,16 @@ margin-right: 0.3rem;
   font-size: 0.8rem;
  }
 
+ .modal-edit_comments-comment-parent:nth-child(1) {
+  position: relative;
+  left: 0.3rem;
+ }
+
  .modal-edit_comments-comment {
   display: flex;
   justify-content: space-between;
   border-bottom: 1px dotted var(--main-color);
+  border-left: 1px dotted var(--main-color);
   margin-bottom: 0.2rem;
   padding: 0 0.3rem;
  }

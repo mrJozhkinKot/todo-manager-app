@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useTypedSelector } from '../../hooks/useTypedSelector';
 import Modal from '../modals/Modal';
@@ -7,8 +7,13 @@ import { ManagerActionType } from '../../utils/reducerTypes';
 import { v4 as uuidv4 } from 'uuid';
 
 const Projects = () => {
+ const { manager } = useTypedSelector((state) => state);
  const { projects, isModal } = useTypedSelector((state) => state.manager);
  const dispatch = useDispatch();
+
+ useEffect(() => {
+  return localStorage.setItem('state', JSON.stringify(manager));
+ });
 
  const openModal = () => {
   dispatch({

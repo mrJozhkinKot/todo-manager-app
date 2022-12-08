@@ -76,7 +76,6 @@ const Task: React.FC<TaskProps> = ({ task, column }) => {
   const currentIndex = currentColumn.tasks.indexOf(currentTask);
   currentColumn.tasks.splice(currentIndex, 1);
   const dropIndex = column.tasks.indexOf(task);
-  console.log(column.id);
   column.tasks.splice(dropIndex + 1, 0, { ...currentTask, status: column.id });
   dispatch({
    type: ManagerActionType.SORT_TASKS,
@@ -97,7 +96,9 @@ const Task: React.FC<TaskProps> = ({ task, column }) => {
  };
  return (
   <Fragment>
-   {currentTaskId === task.id && isModalEdit && <ModalEdit task={task} onSubmit={editTask} />}
+   {currentTaskId === task.id && isModalEdit && (
+    <ModalEdit task={task} column={column} onSubmit={editTask} />
+   )}
    <div
     className="tasks_task"
     onDragStart={(e: React.DragEvent<HTMLDivElement>) => dragStartHandler(e, task, column)}

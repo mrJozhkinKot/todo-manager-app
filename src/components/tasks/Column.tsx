@@ -50,6 +50,7 @@ const Column: React.FC<ColumnProps> = ({ column, tasks }) => {
       status: column.id,
       comments: [],
       columnID: column.id,
+      subtasks: [],
      },
     ],
     colID: column.id,

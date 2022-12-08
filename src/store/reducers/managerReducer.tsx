@@ -1,9 +1,18 @@
 import { ManagerState, ManagerActionType, ManagerAction } from '../../utils/reducerTypes';
 
-const initialState: ManagerState = {
+const getItem = () => {
+ const state = localStorage.getItem('state');
+ if (state) {
+  return JSON.parse(state);
+ }
+ return null;
+};
+const initialState: ManagerState = getItem() || {
  projects: [],
  isModal: false,
  isModalEdit: false,
+ isCreateSubtask: false,
+ isCreateComment: false,
  currentProjectId: '',
  currentColumnId: '',
  currentTaskId: '',
@@ -15,9 +24,11 @@ const initialState: ManagerState = {
   description: '',
   dateCreate: '',
   timeInProcess: '',
+  timeDeadline: '',
   priority: '',
   status: '',
   comments: [],
+  subtasks: [],
  },
 };
 
@@ -75,6 +86,18 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
     ...state,
     isModalEdit: action.payload,
    };
+  case ManagerActionType.TOGGLE_IS_CREATE_SUBTASK:
+   return {
+    ...state,
+    isCreateSubtask: action.payload,
+   };
+
+  case ManagerActionType.TOGGLE_IS_CREATE_COMMENT:
+   return {
+    ...state,
+    isCreateComment: action.payload,
+   };
+
   case ManagerActionType.CREATE_NEW_PROJECT:
    return {
     ...state,
@@ -161,6 +184,198 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
          return action.payload.draggableColumn;
         }
         return column;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+
+  case ManagerActionType.ADD_NEW_SUBTASK:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...task,
+             subtasks: [
+              ...state.projects[index].columns[indCol].tasks[indTask].subtasks,
+              action.payload.subtask,
+             ],
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.EDIT_SUBTASK:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...task,
+             subtasks: state.projects[index].columns[indCol].tasks[indTask].subtasks.map(
+              (subtask) => {
+               if (action.payload.subtaskID === subtask.id) {
+                return action.payload.subtask;
+               }
+               return subtask;
+              }
+             ),
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.DELETE_SUBTASK:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...state.projects[index].columns[indCol].tasks[indTask],
+             subtasks: state.projects[index].columns[indCol].tasks[indTask].subtasks.filter(
+              (subtask) => subtask.id !== action.payload.subtaskID
+             ),
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.ADD_NEW_COMMENT:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...task,
+             comments: [
+              ...state.projects[index].columns[indCol].tasks[indTask].comments,
+              action.payload.comment,
+             ],
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.DELETE_COMMENT:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...state.projects[index].columns[indCol].tasks[indTask],
+             comments: state.projects[index].columns[indCol].tasks[indTask].comments.filter(
+              (comment) => comment.id !== action.payload.commentID
+             ),
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
+       }),
+      };
+     }
+     return project;
+    }),
+   };
+  case ManagerActionType.ADD_REPLY_COMMENT:
+   return {
+    ...state,
+    projects: state.projects.map((project, index) => {
+     if (action.payload.projectID === project.id) {
+      return {
+       ...state.projects[index],
+       columns: state.projects[index].columns.map((col, indCol) => {
+        if (action.payload.colID === col.id) {
+         return {
+          ...col,
+          tasks: state.projects[index].columns[indCol].tasks.map((task, indTask) => {
+           if (action.payload.taskID === task.id) {
+            return {
+             ...task,
+             comments: state.projects[index].columns[indCol].tasks[indTask].comments,
+            };
+           }
+           return task;
+          }),
+         };
+        }
+        return col;
        }),
       };
      }

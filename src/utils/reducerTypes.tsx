@@ -1,9 +1,17 @@
-import { ColumnInterface, ProjectInterface, TaskInterface } from './interfaces';
+import {
+ ColumnInterface,
+ CommentInterface,
+ ProjectInterface,
+ SubtaskInterface,
+ TaskInterface,
+} from './interfaces';
 
 export interface ManagerState {
  projects: ProjectInterface[];
  isModal: boolean;
  isModalEdit: boolean;
+ isCreateSubtask: boolean;
+ isCreateComment: boolean;
  currentProjectId: string;
  currentColumnId: string;
  currentTaskId: string;
@@ -16,6 +24,8 @@ export enum ManagerActionType {
  DELETE_TASK = 'DELETE_TASK',
  TOGGLE_IS_MODAL = 'TOGGLE_IS_MODAL',
  TOGGLE_IS_MODAL_EDIT = 'TOGGLE_IS_MODAL_EDIT',
+ TOGGLE_IS_CREATE_SUBTASK = 'TOGGLE_IS_CREATE_SUBTASK',
+ TOGGLE_IS_CREATE_COMMENT = 'TOGGLE_IS_CREATE_COMMENT',
  CREATE_NEW_PROJECT = 'CREATE_NEW_PROJECT',
  EDIT_PROJECT = 'EDIT_NEW_PROJECT',
  DELETE_PROJECT = 'DELETE_PROJECT',
@@ -26,6 +36,12 @@ export enum ManagerActionType {
  SET_CURRENT_COLUMN = 'SET_CURRENT_COLUMN',
  SET_CURRENT_TASK = 'SET_CURRENT_TASK',
  SORT_TASKS = 'SORT_TASKS',
+ ADD_NEW_SUBTASK = 'ADD_NEW_SUBTASK',
+ EDIT_SUBTASK = 'EDIT_SUBTASK',
+ DELETE_SUBTASK = 'DELETE_SUBTASK',
+ ADD_NEW_COMMENT = 'ADD_NEW_COMMENT',
+ DELETE_COMMENT = 'DELETE_COMMENT',
+ ADD_REPLY_COMMENT = 'ADD_REPLY_COMMENT',
 }
 
 interface addNewTaskAction {
@@ -45,6 +61,16 @@ interface toggleIsModal {
 
 interface toggleIsModalEdit {
  type: ManagerActionType.TOGGLE_IS_MODAL_EDIT;
+ payload: boolean;
+}
+
+interface toggleIsCreateSubtask {
+ type: ManagerActionType.TOGGLE_IS_CREATE_SUBTASK;
+ payload: boolean;
+}
+
+interface toggleIsCreateComment {
+ type: ManagerActionType.TOGGLE_IS_CREATE_COMMENT;
  payload: boolean;
 }
 
@@ -101,11 +127,55 @@ interface sortTasks {
  };
 }
 
+interface addNewSubtaskAction {
+ type: ManagerActionType.ADD_NEW_SUBTASK;
+ payload: { subtask: SubtaskInterface; colID: string; projectID: string; taskID: string };
+}
+
+interface editSubtaskAction {
+ type: ManagerActionType.EDIT_SUBTASK;
+ payload: {
+  subtask: SubtaskInterface;
+  colID: string;
+  projectID: string;
+  taskID: string;
+  subtaskID: string;
+ };
+}
+
+interface deleteSubtaskAction {
+ type: ManagerActionType.DELETE_SUBTASK;
+ payload: { subtaskID: string; taskID: string; colID: string; projectID: string };
+}
+
+interface addNewCommentAction {
+ type: ManagerActionType.ADD_NEW_COMMENT;
+ payload: { comment: CommentInterface; colID: string; projectID: string; taskID: string };
+}
+
+interface deleteCommentAction {
+ type: ManagerActionType.DELETE_COMMENT;
+ payload: { commentID: string; colID: string; projectID: string; taskID: string };
+}
+
+interface addReplyCommentAction {
+ type: ManagerActionType.ADD_REPLY_COMMENT;
+ payload: {
+  comment: CommentInterface;
+  parentID: string;
+  colID: string;
+  projectID: string;
+  taskID: string;
+ };
+}
+
 export type ManagerAction =
  | addNewTaskAction
  | deleteTaskAction
  | toggleIsModal
  | toggleIsModalEdit
+ | toggleIsCreateSubtask
+ | toggleIsCreateComment
  | createNewProjectAction
  | editProjectAction
  | deleteProjectAction
@@ -115,4 +185,10 @@ export type ManagerAction =
  | editTaskAction
  | setCurrentColumn
  | setCurrentTask
- | sortTasks;
+ | sortTasks
+ | addNewSubtaskAction
+ | editSubtaskAction
+ | deleteSubtaskAction
+ | addNewCommentAction
+ | deleteCommentAction
+ | addReplyCommentAction;

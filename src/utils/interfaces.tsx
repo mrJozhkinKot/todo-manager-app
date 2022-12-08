@@ -12,10 +12,12 @@ export interface TaskInterface {
  description: string;
  dateCreate: string;
  timeInProcess: string;
+ timeDeadline: string;
  priority: string;
  files?: Blob;
  status: string;
- comments: string[];
+ comments: CommentInterface[];
+ subtasks: SubtaskInterface[];
 }
 
 export interface ColumnInterface {
@@ -24,8 +26,15 @@ export interface ColumnInterface {
  tasks: TaskInterface[];
 }
 
-export interface StatusListInterface {
- queue: string;
- development: string;
- done: string;
+export interface SubtaskInterface {
+ id: string;
+ title: string;
+ isDone: boolean;
+}
+
+export interface CommentInterface {
+ id: string;
+ idParent: string;
+ text: string;
+ comments: CommentInterface[];
 }

@@ -56,15 +56,24 @@ a {
 }
 
 .high {
-  color: var(--secondary-color);
+  background-color: var(--secondary-color);
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  color: var(--text-color);
 }
 
 .middle {
-  color: var(--main-color);
+  background-color: var(--main-color);
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  color: var(--text-color);
 }
 
 .low {
-  color: green;
+  background-color: green;
+  border-radius: 5px;
+  padding: 0.1rem 0.5rem;
+  color: var(--text-color);
 }
 
 .modal {
@@ -159,6 +168,10 @@ a {
   cursor: pointer;
 }
 
+.modal-edit_title i:hover {
+ color: var(--secondary-color);
+}
+
 .modal-edit_button-edit {
   margin-left: 1.5rem;
 }
@@ -204,7 +217,133 @@ a {
   justify-content: space-between;
   margin-top: 1rem;
   text-align: end;
+  align-items: baseline;
 }
+
+.modal-edit_file { 
+  display: none;
+ }
+
+.modal-edit_file-span {
+  cursor: pointer;
+  background: var(--main-color);
+  color: #FFF;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+}
+
+.modal-edit_file-span:hover {
+  background-color: var(--secondary-color);
+}
+
+.modal-edit_subtasks {
+  margin: 1rem 0;
+}
+
+.modal-edit_subtasks-subtask {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-size: 0.9rem;
+  margin: 0.1rem 0;
+  border-bottom: 1px dotted var(--main-color);
+}
+
+.modal-edit_subtasks-subtask_content {
+  display: flex;
+  align-items: baseline;
+}
+.modal-edit_subtasks-subtask_content p{
+  border-bottom: none;
+}
+
+.modal-edit_subtasks-subtask_button, .modal-edit_comments-comment_button {
+  color: var(--third-bg-color);
+  cursor: pointer;
+}
+
+.modal-edit_subtasks-subtask_button:hover, .modal-edit_comments-comment_button :hover {
+  color: var(--secondary-color)
+}
+
+.modal-edit_subtasks-subtask__cross {
+  text-decoration: line-through;
+}
+
+.modal-edit_subtasks-subtask input {
+margin-right: 0.3rem;
+}
+
+.modal-edit_subtasks-input{
+  display: flex;
+  align-items: baseline;
+  border: 1px solid var(--main-color);
+  border-radius: 5px;
+  padding: 0.2rem;
+}
+
+.modal-edit_subtasks-input input{
+  flex-basis: 85%;
+  border: none;
+  outline: none;
+}
+
+.modal-edit_subtasks-input i{
+  cursor: pointer;
+  margin: 0 0.3rem;
+  color: var(--main-color)
+}
+
+.modal-edit_subtasks-input i:hover {
+  color: var(--secondary-color);
+ }
+
+ .modal-edit_comments {
+  margin: 0.5rem 0;
+  padding-top: 0.8rem;
+  border-top: 2px solid var(--secondary-text-color);
+  text-align: start;
+  font-size: 0.8rem;
+ }
+
+ .modal-edit_comments-comment {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px dotted var(--main-color);
+  margin-bottom: 0.2rem;
+  padding: 0 0.3rem;
+ }
+
+ .modal-edit_comments-comment_reply {
+  cursor: pointer;
+  font-size: 0.7rem;
+  color: var(--main-color);
+ }
+
+
+.modal-edit_button {
+  cursor: pointer;
+  background: var(--main-color);
+  color: #FFF;
+  font-size: 0.8rem;
+  border-radius: 5px;
+  padding: 0.2rem 0.5rem;
+} 
+
+.modal-edit_button-subtask:hover {
+  background-color: var(--secondary-color);
+}
+
+.modal-edit_date-deadline {
+display: flex;
+flex-direction: column;
+font-size: 0.8rem;
+justify-content: flex-start;
+text-align: start;
+width: 30%;
+}
+
 
 .modal-edit_button-confirm {
   cursor: pointer;
@@ -213,7 +352,7 @@ a {
   border-radius: 5px;
   background-color: var(--third-bg-color);
   align-self: flex-end;
-  padding: 0.3rem 0.6rem;
+  padding: 0.2rem 0.6rem;
   text-align: end;
 }
 
@@ -379,19 +518,14 @@ a {
   color: var(--secondary-color);
 }
 
-.modal-edit_file { 
-  display: none;
- }
 
-.modal-edit_file-span {
-  cursor: pointer;
-  background: var(--main-color);
-  color: #FFF;
-  font-size: 0.8rem;
-  border-radius: 5px;
-  padding: 0.2rem 0.5rem;
-}
-.modal-edit_file-span:hover { border-color: #09F; }
-.modal-edit_file-span:active {
-  background: linear-gradient(to top, #09F 0%, #024 100%);
+@media (max-width: 700px) {
+  .tasks_wrapper {
+    overflow-x: auto;
+    justify-content: flex-start;
+  }
+  .tasks_column {
+    min-width: 90vw;
+    margin-right: 1rem;
+  }
 }

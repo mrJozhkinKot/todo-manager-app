@@ -24,8 +24,6 @@ export enum ManagerActionType {
  DELETE_TASK = 'DELETE_TASK',
  TOGGLE_IS_MODAL = 'TOGGLE_IS_MODAL',
  TOGGLE_IS_MODAL_EDIT = 'TOGGLE_IS_MODAL_EDIT',
- TOGGLE_IS_CREATE_SUBTASK = 'TOGGLE_IS_CREATE_SUBTASK',
- TOGGLE_IS_CREATE_COMMENT = 'TOGGLE_IS_CREATE_COMMENT',
  CREATE_NEW_PROJECT = 'CREATE_NEW_PROJECT',
  EDIT_PROJECT = 'EDIT_NEW_PROJECT',
  DELETE_PROJECT = 'DELETE_PROJECT',
@@ -61,16 +59,6 @@ interface toggleIsModal {
 
 interface toggleIsModalEdit {
  type: ManagerActionType.TOGGLE_IS_MODAL_EDIT;
- payload: boolean;
-}
-
-interface toggleIsCreateSubtask {
- type: ManagerActionType.TOGGLE_IS_CREATE_SUBTASK;
- payload: boolean;
-}
-
-interface toggleIsCreateComment {
- type: ManagerActionType.TOGGLE_IS_CREATE_COMMENT;
  payload: boolean;
 }
 
@@ -174,8 +162,6 @@ export type ManagerAction =
  | deleteTaskAction
  | toggleIsModal
  | toggleIsModalEdit
- | toggleIsCreateSubtask
- | toggleIsCreateComment
  | createNewProjectAction
  | editProjectAction
  | deleteProjectAction

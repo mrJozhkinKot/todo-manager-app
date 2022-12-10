@@ -15,6 +15,7 @@ const Comment: React.FC<CommentProps> = ({ comment, task, column }) => {
  const { id } = useParams();
  const dispatch = useDispatch();
  const [isReplyInput, setIsReplyInput] = useState<boolean>(false);
+ const [isLike, setIsLike] = useState<boolean>(false);
 
  const deleteComment = () => {
   dispatch({
@@ -28,26 +29,31 @@ const Comment: React.FC<CommentProps> = ({ comment, task, column }) => {
   });
  };
 
+ const setLike = () => {
+  setIsLike(!isLike);
+ };
+
  const addReplyInput = () => {
   setIsReplyInput(true);
  };
 
  const addReplyComment = (value: string) => {
-  dispatch({
-   type: ManagerActionType.ADD_REPLY_COMMENT,
-   payload: {
-    comment: {
-     id: uuidv4(),
-     idParent: comment.id,
-     text: value,
-     comments: [],
+  value &&
+   dispatch({
+    type: ManagerActionType.ADD_REPLY_COMMENT,
+    payload: {
+     comment: {
+      id: uuidv4(),
+      idParent: comment.id,
+      text: value,
+      comments: [],
+     },
+     projectID: id,
+     colID: column.id,
+     taskID: task.id,
+     commentID: comment.id,
     },
-    projectID: id,
-    colID: column.id,
-    taskID: task.id,
-    commentID: comment.id,
-   },
-  });
+   });
  };
 
  return (
@@ -55,12 +61,22 @@ const Comment: React.FC<CommentProps> = ({ comment, task, column }) => {
    <div className="modal-edit_comments-comment">
     <div>
      <p>{comment.text}</p>
-     <p className="modal-edit_comments-comment_reply" onClick={addReplyInput}>
-      Reply
-     </p>
-    </div>
-    <div className="modal-edit_comments-comment_button">
-     <i className="fas fa-times" onClick={deleteComment}></i>
+     <div className="modal-edit_comments-comment_bottom">
+      <i
+       className={
+        isLike
+         ? 'fas fa-heart modal-edit_comments-comment_bottom-icon__active'
+         : 'fas fa-heart modal-edit_comments-comment_bottom-icon'
+       }
+       onClick={setLike}
+      ></i>
+      <p className="modal-edit_comments-comment_bottom-reply" onClick={addReplyInput}>
+       Reply
+      </p>
+      <p className="modal-edit_comments-comment_bottom-reply" onClick={deleteComment}>
+       Delete
+      </p>
+     </div>
     </div>
    </div>
    <div>

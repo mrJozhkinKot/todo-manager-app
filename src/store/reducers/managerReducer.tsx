@@ -24,12 +24,26 @@ const addRecursiveComments = (
  });
 };
 
+const deleteRecursiveComments = (
+ comments: CommentInterface[],
+ newCommentID: string
+): CommentInterface[] => {
+ return comments
+  .filter((c) => {
+   return c.id !== newCommentID;
+  })
+  .map((c) => {
+   if (!c.comments.length) {
+    return c;
+   }
+   return { ...c, comments: deleteRecursiveComments(c.comments, newCommentID) };
+  });
+};
+
 const initialState: ManagerState = getItem() || {
  projects: [],
  isModal: false,
  isModalEdit: false,
- isCreateSubtask: false,
- isCreateComment: false,
  currentProjectId: '',
  currentColumnId: '',
  currentTaskId: '',
@@ -102,16 +116,6 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
    return {
     ...state,
     isModalEdit: action.payload,
-   };
-  case ManagerActionType.TOGGLE_IS_CREATE_SUBTASK:
-   return {
-    ...state,
-    isCreateSubtask: action.payload,
-   };
-  case ManagerActionType.TOGGLE_IS_CREATE_COMMENT:
-   return {
-    ...state,
-    isCreateComment: action.payload,
    };
   case ManagerActionType.CREATE_NEW_PROJECT:
    return {
@@ -351,8 +355,9 @@ export const managerReducer = (state = initialState, action: ManagerAction): Man
            if (action.payload.taskID === task.id) {
             return {
              ...state.projects[index].columns[indCol].tasks[indTask],
-             comments: state.projects[index].columns[indCol].tasks[indTask].comments.filter(
-              (comment) => comment.id !== action.payload.commentID
+             comments: deleteRecursiveComments(
+              state.projects[index].columns[indCol].tasks[indTask].comments,
+              action.payload.commentID
              ),
             };
            }

@@ -300,12 +300,17 @@ margin-right: 0.3rem;
  }
 
  .modal-edit_comments {
-  max-width: 95%;
   margin: 0.5rem 0;
   padding-top: 0.8rem;
   border-top: 2px solid var(--secondary-text-color);
   text-align: start;
   font-size: 0.8rem;
+ }
+
+ .modal-edit_comments-comment-parent {
+  position: relative;
+  left: 0.3rem;
+  overflow: hidden;
  }
 
  .modal-edit_comments-comment-parent:nth-child(1) {
@@ -322,11 +327,30 @@ margin-right: 0.3rem;
   padding: 0 0.3rem;
  }
 
- .modal-edit_comments-comment_reply {
+ .modal-edit_comments-comment_bottom {
+  display: flex;
   cursor: pointer;
-  font-size: 0.7rem;
-  color: var(--main-color);
+  margin-top: 0.3rem;
  }
+
+ .modal-edit_comments-comment_bottom-reply {
+  color: var(--main-color);
+  margin-right: 0.3rem;
+  font-size: 0.7rem;
+ }
+
+ .modal-edit_comments-comment_bottom-icon {
+  font-size: 0.6rem;
+  color: var(--secondary-bg-color);
+  margin-right: 0.3rem;
+ }
+
+ .modal-edit_comments-comment_bottom-icon__active {
+  font-size: 0.6rem;
+  color: var(--main-color);
+  margin-right: 0.3rem;
+ }
+
 
 
 .modal-edit_button {

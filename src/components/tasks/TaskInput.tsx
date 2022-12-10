@@ -12,6 +12,7 @@ const TaskInput: React.FC<TaskInputInterface> = ({ onCreate, onButtonsAction }) 
    <input
     type="text"
     value={value}
+    autoFocus
     onChange={(e: React.FormEvent<HTMLInputElement>) => {
      setValue(e.currentTarget.value);
     }}

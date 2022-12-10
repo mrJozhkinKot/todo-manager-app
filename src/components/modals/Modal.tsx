@@ -45,6 +45,7 @@ const Modal: React.FC<ModalProps> = ({ modal, project, onCreate }) => {
      <input
       id="title"
       type="text"
+      autoFocus
       className="modal_input"
       value={valueTitle}
       onChange={(e: React.FormEvent<HTMLInputElement>) => setValueTitle(e.currentTarget.value)}

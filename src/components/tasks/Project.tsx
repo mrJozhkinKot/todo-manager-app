@@ -44,8 +44,8 @@ const Project: React.FC<ProjectProps> = ({ project }) => {
      onCreate={editProject}
     />
    )}
-   <Link to={`/${project.id}`}>
-    <div className="projects_project-title">{project.title}</div>
+   <Link to={`/${project.id}`} className="projects_project-title">
+    <div>{project.title}</div>
    </Link>
    <div className="projects_project-icons">
     <i className="fas fa-pencil-alt tasks_task-icon" onClick={openModal}></i>

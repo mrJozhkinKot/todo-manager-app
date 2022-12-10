@@ -21,7 +21,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
  const dispatch = useDispatch();
  const [valueTitle, setValueTitle] = useState<string>(task.title);
  const [valueDescription, setValueDescription] = useState<string>(task.description);
- const [valueSelect, setValueSelect] = useState<string>('');
+ const [valueSelect, setValueSelect] = useState<string>(task.priority);
  const [valueDate, setValueDate] = useState<string>('');
  const [isEdit, setIsEdit] = useState<boolean>(false);
  const [isSubtask, setIsSubtask] = useState<boolean>(false);
@@ -37,11 +37,20 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
   setValueSelect(e.currentTarget.value);
  };
 
+ const getTimesFromMins = (value: number) => {
+  const hours = (value / 60) | 0;
+  const minutes = value % 60 | 0;
+  return `${moment.utc().hours(hours).minutes(minutes).format('HH')} h ${moment
+   .utc()
+   .hours(hours)
+   .minutes(minutes)
+   .format('m')} min`;
+ };
  const calculateTimeInProcess = () => {
   const start = moment(task.dateCreate, 'LLL');
   const now = moment();
-  const diffInDays = now.diff(start, 'minutes');
-  return `${diffInDays} minutes`;
+  const diff = now.diff(start, 'minutes');
+  return getTimesFromMins(diff);
  };
 
  const closeModal = () => {
@@ -92,6 +101,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
      {isEdit && (
       <input
        value={valueTitle}
+       autoFocus
        onChange={(e: React.FormEvent<HTMLInputElement>) => setValueTitle(e.currentTarget.value)}
       />
      )}
@@ -192,21 +202,23 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
        {buttonCreateComment}
       </div>
      )}
-     <div
-      className="modal-edit_button-confirm"
-      onClick={() => {
-       closeModal();
-       onSubmit({
-        ...task,
-        title: valueTitle,
-        description: valueDescription,
-        priority: valueSelect,
-        timeDeadline: valueDate,
-       });
-      }}
-     >
-      OK
-     </div>
+     {!isComment && !isSubtask && (
+      <div
+       className="modal-edit_button-confirm"
+       onClick={() => {
+        closeModal();
+        onSubmit({
+         ...task,
+         title: valueTitle,
+         description: valueDescription,
+         priority: valueSelect,
+         timeDeadline: valueDate,
+        });
+       }}
+      >
+       OK
+      </div>
+     )}
     </div>
    </div>
   </div>

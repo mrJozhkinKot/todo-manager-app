@@ -404,7 +404,6 @@ width: 30%;
 
 .projects_project {
   display: flex;
-  justify-content: space-between;
   align-items: baseline;
   background-color: var(--third-bg-color);
   margin-bottom: 1rem;
@@ -418,16 +417,16 @@ width: 30%;
 }
 
 .projects_project-title {
+  display: flex;
   cursor: pointer;
   border-radius: 5px;
   padding: 1rem;
-} 
-
-.projects_project-title:hover {
-  background-color: var(--secondary-color-bright);
+  flex-basis: 85%;
 } 
 
 .projects_project-icons {
+  display: flex;
+  flex-basis: 15%;
   cursor: pointer;
   padding: 1rem 0;
   flex-shrink: 1;

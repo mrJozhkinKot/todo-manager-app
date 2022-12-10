@@ -32,6 +32,7 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
  const priorities: priorities = ['high', 'middle', 'low'];
  const buttonCreateSubtask = 'Create subtask';
  const buttonCreateComment = 'Add comment';
+ const buttonFile = 'Choose File';
 
  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
   setValueSelect(e.currentTarget.value);
@@ -188,10 +189,12 @@ const ModalEdit: React.FC<ModalEditProps> = ({ task, column, onSubmit }) => {
      />
     )}
     <div className="modal-edit_buttons">
-     <label>
-      <input type="file" className="modal-edit_file"></input>
-      <span className="modal-edit_file-span">Choose File</span>
-     </label>
+     {!isSubtask && !isComment && (
+      <label>
+       <input type="file" className="modal-edit_file"></input>
+       <span className="modal-edit_file-span">{buttonFile}</span>
+      </label>
+     )}
      {!isSubtask && !isComment && (
       <div className="modal-edit_button" onClick={() => setIsSubtask(true)}>
        {buttonCreateSubtask}
